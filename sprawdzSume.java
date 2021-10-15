@@ -38,19 +38,19 @@ public class sprawdzSume {
         Boolean diff = false;
 
         for (int x = 0; x < parseHash.length(); x++){
-            if(parseHash[x] != fileHash[x]){
+            if(parseHash.charAt(x) != fileHash.charAt(x)){
                 diff = true;
                 break;
             }
         }
 
             if(diff==false){
-                System.out.println(consoleColors.YELLOW+hashFilecontent);
-                System.out.println(consoleColors.YELLOW+shaDigest);
+                System.out.println(consoleColors.YELLOW+fileHash);
+                System.out.println(consoleColors.YELLOW+parseHash);
                 System.out.println(consoleColors.GREEN+"Sygnatura (shaDigest) jest OK"+consoleColors.RESET);
             }else{
-                System.out.println(consoleColors.YELLOW+hashFilecontent);
-                System.out.println(consoleColors.YELLOW+shaDigest);
+                System.out.println(consoleColors.YELLOW+fileHash);
+                System.out.println(consoleColors.YELLOW+parseHash);
                 System.out.println(consoleColors.RED+"Sygnatura (shaDigest) pliku się nie zgadza z zadeklarowaną!"+consoleColors.RESET);
             }
         
