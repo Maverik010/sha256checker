@@ -1,6 +1,6 @@
 import java.io.*;
 import java.security.*;
-
+import java.util.Scanner;
 
 public class sprawdzSume {
     
@@ -13,13 +13,12 @@ public class sprawdzSume {
 
             MessageDigest shaDigest = MessageDigest.getInstance("SHA-256"); // zainicjuj algorytm SHA-256
             FileInputStream sourceFile = new FileInputStream(args[0]);      // ścieżka do pliku źródłowego
-            FileInputStream hashFile = new FileInputStream(args[1]);      // ścieżka do pliku .sha256
-            //  System.out.print(args[0]);
-            //  System.out.print(" "+args[1]);
-            
+            Scanner hashFile = new Scanner(args[1]).useDelimiter("\\p{javaWhitespace}+");      // Zawartość pliku zczytana do pierweszego znaku spacji <sha256>\w
+            String parseHash = hashFile.nextLine();
+            hashFile.close();
         
-        byte[] data = new byte[1024]; // przydzielenie długości sha-256 zakresu pamięci
-        int read ; // iterator
+        byte[] data = new byte[1024]; // tablica bitów
+        int read; // iterator
 
         while ((read = sourceFile.read(data)) != -1) {
             shaDigest.update(data, 0, read);
@@ -31,17 +30,21 @@ public class sprawdzSume {
         for (int i = 0; i < hashBytes.length; i++) {
           sb.append(Integer.toString((hashBytes[i] & 0xff) + 0x100, 16).substring(1));
         }
-        hashFile.close();
-        String fileHash = sb.toString();
-    String hash = ""; //string do hashFileContent
-        sb.delete(0, sb.length());
-        StringBuilder hashFilecontent = new StringBuilder();
 
-        while(hashFile.available() != 0){
-            hashFilecontent.append(hashFile);
-            hash = hashFilecontent.toString();
+        String fileHash = sb.toString();
+        String hash = ""; //string do hashFileContent
+        sb.delete(0, sb.length());
+
+        Boolean diff = false;
+
+        for (int x = 0; x < parseHash.length(); x++){
+            if(parseHash[x] != fileHash[x]){
+                diff = true;
+                break;
+            }
         }
-            if(hash.equals(fileHash)){
+
+            if(diff==false){
                 System.out.println(consoleColors.YELLOW+hashFilecontent);
                 System.out.println(consoleColors.YELLOW+shaDigest);
                 System.out.println(consoleColors.GREEN+"Sygnatura (shaDigest) jest OK"+consoleColors.RESET);
@@ -51,7 +54,6 @@ public class sprawdzSume {
                 System.out.println(consoleColors.RED+"Sygnatura (shaDigest) pliku się nie zgadza z zadeklarowaną!"+consoleColors.RESET);
             }
         
-
 
         } catch (Exception e) {
             System.err.println("Wyjątek: " + e);
