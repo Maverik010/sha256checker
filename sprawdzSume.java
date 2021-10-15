@@ -6,6 +6,10 @@ public class sprawdzSume {
     
     public static void main(String[] args) {
 
+        /* Tekst powitalny */
+
+        System.out.println(consoleColors.CYAN_BOLD+consoleColors.BLUE_BACKGROUND_BRIGHT+"SHA256checker 0.1v Alpha"+consoleColors.RESET);
+
         if (args.length != 2) {
             System.out.println(consoleColors.YELLOW+"Użycie: sprawdzSume <ścieżka_do_pliku> <ścieżka_do_sumy_shaDigest>"+consoleColors.RESET);
         }
