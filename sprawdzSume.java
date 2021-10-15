@@ -19,13 +19,13 @@ public class sprawdzSume {
             
         
         byte[] data = new byte[1024]; // przydzielenie długości sha-256 zakresu pamięci
-        int read = 0; // iterator
+        int read ; // iterator
 
         while ((read = sourceFile.read(data)) != -1) {
             shaDigest.update(data, 0, read);
-        };
+        }
         sourceFile.close();
-        
+
         byte[] hashBytes = shaDigest.digest();
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < hashBytes.length; i++) {
@@ -33,14 +33,15 @@ public class sprawdzSume {
         }
         hashFile.close();
         String fileHash = sb.toString();
-
+    String hash = ""; //string do hashFileContent
         sb.delete(0, sb.length());
         StringBuilder hashFilecontent = new StringBuilder();
-        
+
         while(hashFile.available() != 0){
             hashFilecontent.append(hashFile);
+            hash = hashFilecontent.toString();
         }
-            if(hashFilecontent.equals(fileHash)){
+            if(hash.equals(fileHash)){
                 System.out.println(consoleColors.YELLOW+hashFilecontent);
                 System.out.println(consoleColors.YELLOW+shaDigest);
                 System.out.println(consoleColors.GREEN+"Sygnatura (shaDigest) jest OK"+consoleColors.RESET);
@@ -53,8 +54,7 @@ public class sprawdzSume {
 
 
         } catch (Exception e) {
-            System.err.println("Wyjątek: " + e.toString());            
+            System.err.println("Wyjątek: " + e);
         }
 }
 }
-
