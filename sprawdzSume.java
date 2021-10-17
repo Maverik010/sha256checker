@@ -26,9 +26,11 @@ public class sprawdzSume {
                 FileInputStream sourceFile = new FileInputStream(args[0]);      // ścieżka do pliku źródłowego
                 FileInputStream hashFile = new FileInputStream(args[1]);      // ścieżka do pliku .sha256
                 MessageDigest digest = MessageDigest.getInstance("SHA-256");
-                String originalString = sourceFile.toString();
+
+                /*String originalString = sourceFile.toString();
                 byte[] encodedhash = digest.digest(
-                        originalString.getBytes(StandardCharsets.UTF_8));
+                        originalString.getBytes(StandardCharsets.UTF_8));*/
+            byte[] encodedhash = digest.digest(sourceFile.readAllBytes());
                 String encoded = bytesToHex(encodedhash);                    //String z hexem hasha
                 String hashFromFile = "";                  //Hash z pliku
                 BufferedReader br =
