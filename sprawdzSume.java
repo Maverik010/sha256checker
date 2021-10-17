@@ -39,6 +39,8 @@ public class sprawdzSume {
                     sb.append( line );
                     hashFromFile = sb.toString();
                 }
+                br.close();
+                sourceFile.close();
                 System.out.println(encoded + "   " + encoded.length());
                 System.out.println(hashFromFile + "   " + encoded.length());
                 if (encoded.equals(hashFromFile)) {
