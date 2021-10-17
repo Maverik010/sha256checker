@@ -22,9 +22,7 @@ public class sprawdzSume {
             System.out.println(consoleColors.YELLOW + "Użycie: sprawdzSume <ścieżka_do_pliku> <ścieżka_do_sumy_shaDigest>" + consoleColors.RESET);
         } else try {
 
-            if (args.length != 2) {
-                System.out.println("Użycie: sprawdzSume <ścieżka_do_pliku> <ścieżka_do_sumy_shaDigest>");
-            }else{
+
                 FileInputStream sourceFile = new FileInputStream(args[0]);      // ścieżka do pliku źródłowego
                 FileInputStream hashFile = new FileInputStream(args[1]);      // ścieżka do pliku .sha256
                 MessageDigest digest = MessageDigest.getInstance("SHA-256");
@@ -33,7 +31,6 @@ public class sprawdzSume {
                         originalString.getBytes(StandardCharsets.UTF_8));
                 String encoded = bytesToHex(encodedhash);                    //String z hexem hasha
                 String hashFromFile = "";                  //Hash z pliku
-
                 BufferedReader br =
                         new BufferedReader( new InputStreamReader(hashFile, StandardCharsets.UTF_8 ));
                 StringBuilder sb = new StringBuilder();
@@ -49,9 +46,9 @@ public class sprawdzSume {
                 } else {
                     System.out.println("Hash zjebany");
                 }
-            }
-        }catch (Exception e) {
+            }catch (Exception e) {
             System.err.println("Wyjątek: " + e);
         }
+        }
     }
-}
+
