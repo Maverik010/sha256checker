@@ -38,7 +38,7 @@ public class sprawdzSume {
                 StringBuilder sb = new StringBuilder();
                 String line;
                 while(( line = br.readLine()) != null ) {
-                    sb.append( line );
+                    sb.append(line,0,64);
                     hashFromFile = sb.toString();
                 }
                 br.close();
