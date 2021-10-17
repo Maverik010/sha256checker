@@ -18,6 +18,8 @@ public class sprawdzSume {
 
     public static void main(String[] args) {
 
+        System.out.println(consoleColors.BLUE+"Checksum checker (SHA256) 0.5v"+consoleColors.RESET + "\n");
+
         if (args.length != 2) {
             System.out.println(consoleColors.YELLOW + "Użycie: sprawdzSume <ścieżka_do_pliku> <ścieżka_do_sumy_shaDigest>" + consoleColors.RESET);
         } else try {
@@ -43,13 +45,20 @@ public class sprawdzSume {
                 }
                 br.close();
                 sourceFile.close();
-                System.out.println(encoded + "   " + encoded.length());
-                System.out.println(hashFromFile + "   " + encoded.length());
+                //  System.out.println(encoded + "   " + encoded.length());
+                //  System.out.println(hashFromFile + "   " + encoded.length());
+                String[] names = {
+                    args[0].substring(args[0].lastIndexOf("/") + 1), args[1].substring(args[1].lastIndexOf("/") + 1),
+                    encoded, hashFromFile
+                };
+
+                
                 if (encoded.equals(hashFromFile)) {
-                    System.out.println("Hash prawidlowy");
+                    System.out.println(consoleColors.GREEN+"Hash prawidłowy");
                 } else {
-                    System.out.println("Hash zjebany");
+                    System.out.println(consoleColors.RED+"Hash nieprawidłowy");
                 }
+                System.out.print(consoleColors.RESET);
             }catch (Exception e) {
             System.err.println("Wyjątek: " + e);
         }
