@@ -11,8 +11,8 @@ import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 public class sprawdzSume {
     private static String bytesToHex(byte[] hash) {
         StringBuilder hexString = new StringBuilder(2 * hash.length);
-        for (int i = 0; i < hash.length; i++) {
-            String hex = Integer.toHexString(0xff & hash[i]);
+        for (byte b : hash) {
+            String hex = Integer.toHexString(0xff & b);
             if (hex.length() == 1) {
                 hexString.append('0');
             }
@@ -34,9 +34,7 @@ public class sprawdzSume {
                 FileInputStream hashFile = new FileInputStream(args[1]);      // ścieżka do pliku .sha256
                 MessageDigest digest = MessageDigest.getInstance("SHA-256");
 
-                /*String originalString = sourceFile.toString();
-                byte[] encodedhash = digest.digest(
-                        originalString.getBytes(StandardCharsets.UTF_8));*/
+
                         
             byte[] encodedhash = digest.digest(sourceFile.readAllBytes());
                 String encoded = bytesToHex(encodedhash);                    //String z hexem hasha
@@ -55,15 +53,10 @@ public class sprawdzSume {
                     args[0].substring(args[0].lastIndexOf("/") + 1), args[1].substring(args[1].lastIndexOf("/") + 1),
                     encoded, hashFromFile, "PRAWIDŁOWY", "NIEPRAWIDŁOWY"
                 };
-                boolean flag = false;
-                if (encoded.equals(hashFromFile)) {
-                    // System.out.println(consoleColors.GREEN+"Hash prawidłowy");
-                    flag = true;
-                } else {
-                    // System.out.println(consoleColors.RED+"Hash nieprawidłowy");
-                }
+                boolean flag = encoded.equals(hashFromFile);
+            // System.out.println(consoleColors.GREEN+"Hash prawidłowy");
 
-                AsciiTable at = new AsciiTable();
+            AsciiTable at = new AsciiTable();
                 at.addRule();
                 at.addRow("Nazwa Pliku", "Hash").setTextAlignment(TextAlignment.CENTER);
                 at.addRule();
